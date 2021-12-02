@@ -31,7 +31,7 @@ while running:
           running = False
 
         # If the guess is less than the number print out a statement advising them to guess higher 
-        # and increase the "current_try" and variable by 1.
+        # and increase the "current_try" variable by 1.
         elif guess < number:
             print("No, it's a little higher than that.")
             current_try = current_try + 1
