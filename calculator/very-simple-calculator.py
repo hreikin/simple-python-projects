@@ -16,25 +16,36 @@ def multiply(num1, num2):
 def divide(num1, num2):
     return num1 / num2
 
-# TO DO: Add a while loop with an option to quit or re-run the program.
-# running = True
+running = True
 
-select = int(input("Select which operation you would like to execute:\n" \
-    "1. Addition\n" \
-    "2. Subtraction\n" \
-    "3. Multiplication\n" \
-    "4. Division\n"))
+while running:
 
-first_number = int(input("Enter the first number: "))
-second_number = int(input("Enter the second number: "))
+        select = int(input("Select a number to pick which operation you would like to execute:\n" \
+            "1. Addition\n" \
+            "2. Subtraction\n" \
+            "3. Multiplication\n" \
+            "4. Division\n"))
 
-if select == 1:
-    print(first_number, "+", second_number, "=", add(first_number, second_number))
-elif select == 2:
-    print(first_number, "-", second_number, "=", subtract(first_number, second_number))
-elif select == 3:
-    print(first_number, "*", second_number, "=", multiply(first_number, second_number))
-elif select == 4:
-    print(first_number, "/", second_number, "=", divide(first_number, second_number))
+        first_number = int(input("Enter the first number: "))
+        second_number = int(input("Enter the second number: "))
+
+        if select == 1:
+            print(first_number, "+", second_number, "=", add(first_number, second_number))
+        elif select == 2:
+            print(first_number, "-", second_number, "=", subtract(first_number, second_number))
+        elif select == 3:
+            print(first_number, "*", second_number, "=", multiply(first_number, second_number))
+        elif select == 4:
+            print(first_number, "/", second_number, "=", divide(first_number, second_number))
+        else:
+            print("Error, invalid input.")
+
+        answer = input('Do you want to continue (y/n) ? ')
+
+        if answer.lower().startswith("y") or answer.upper().startswith("Y"):
+            print("Ok, let's carry on then.")
+        elif answer.lower().startswith("n") or answer.upper().startswith("N"):
+            print("Ok, thank you.")
+            running = False
 else:
-    print("Error, invalid input.")
+    print("Goodbye!")
