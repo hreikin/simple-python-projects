@@ -1,0 +1,66 @@
+#:kivy 2.0.0
+
+# Add a "PongBall" widget which is also referenced as a child widget in "PongGame" so it is 
+# created when the game is started. This widget sets the balls shape, size and position.
+<PongBall>:
+    size: 50, 50
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<PongPaddle>:
+    size: 25, 200
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<PongGame>:
+    # Sets the game balls "ObjectProperty" to the same as the "id" called in the child widget
+    # for the "PongBall" widget and does the same for each players "PongPaddle" child widget.
+    ball: pong_ball
+    player1: player_left
+    player2: player_right
+
+    # The canvas is used to draw graphics primitives.
+    canvas:
+        # This creates a rectangle (the white line down the middle) which is 5 pixels left
+        # of the horizontal center ("self.center_x") and 0 for the y axis. The size of the 
+        # rectangle is set to 10 pixels width and the widgets height ("self.height") for 
+        # height so it covers the full length of the window.
+        Rectangle:
+            pos: self.center_x - 5, 0
+            size: 10, self.height
+
+    # These labels create the score at the top of the screen. They are child widgets of the 
+    # "PongGame" widget. Here the "font_size" is set and they are positioned relatively to 
+    # the root widget ("root.width" and "root.top").
+    Label:
+        font_size: 70
+        center_x: root.width / 4
+        top: root.top - 50
+        text: str(root.player1.score)
+
+    Label:
+        font_size: 70
+        center_x: root.width * 3 / 4
+        top: root.top - 50
+        text: str(root.player2.score)
+
+    # Child widget of the "PongBall" widget created above. Includes the "id" and starting position.
+    PongBall:
+        id: pong_ball
+        center: self.parent.center
+
+    # Child widgets of the "PongPaddle" widget created above. Includes the "id" (player) and 
+    # position on the screen.
+    PongPaddle:
+        id: player_left
+        x: root.x
+        center_y: root.center_y
+
+    PongPaddle:
+        id: player_right
+        x: root.width - self.width
+        center_y: root.center_y
