@@ -10,6 +10,7 @@ seed()
 roll_again = True
 number_of_dice = 0
 current_dice_roll = 1
+ask_to_retry = True
 
 # Rolls the dice and prints out the values.
 while roll_again:
@@ -26,14 +27,21 @@ while roll_again:
     else:
         current_dice_roll = 1
 
-    # Ask if the user wants to roll again.
-    roll_again = input("Do you want to roll again (yes/no) ? ")
-    
-    # Check the users answer and either restart the loop or end it.
-    if roll_again.lower().startswith("y") or roll_again.upper().startswith("Y"):
-            print("Ok, let's carry on then.")
-    elif roll_again.lower().startswith("n") or roll_again.upper().startswith("N"):
-            print("Ok, thank you.")
-            roll_again = False
+    while ask_to_retry:
+        # Ask if the user wants to roll again.
+        roll_again = input("Do you want to roll again (yes/no) ? ")
+        
+        # Check the users answer and either restart the loop or end it.
+        if roll_again.lower().startswith("y") or roll_again.upper().startswith("Y"):
+                print("Ok, let's carry on then.")
+                ask_to_retry = False
+        elif roll_again.lower().startswith("n") or roll_again.upper().startswith("N"):
+                print("Ok, thank you.")
+                roll_again = False
+                ask_to_retry = False
+        else:
+            print("Invalid input, please try again.")
+    else:
+        ask_to_retry = True
 else:
     print("Goodbye!")
