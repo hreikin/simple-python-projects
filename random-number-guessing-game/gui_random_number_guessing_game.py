@@ -1,9 +1,13 @@
 # Importing required libraries.
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
-from PyQt5.QtCore import * 
+from PyQt5.QtCore import *
+from random import seed 
 import random
 import sys
+
+# Seed the random number generator.
+seed()
 
 # Initialize main window.
 class MainWindow(QMainWindow):
