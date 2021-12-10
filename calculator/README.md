@@ -1,0 +1,2 @@
+# Calculator
+A very simple CLI calculator that does basic arithmetic with 2 numbers. The user is asked which operation they would like to use and then for two numbers, it then works out the answer and asks the user if they would like to carry on using the calculator or quit.
