@@ -6,7 +6,7 @@ from random import seed
 import random
 import sys
 
-# Seed the random number generator.
+# Seed the random number. No arguments are given so it uses the systems time to generate the random number.
 seed()
 
 # Initialize main window.
