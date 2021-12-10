@@ -11,10 +11,14 @@ roll_again = True
 number_of_dice = 0
 current_dice_roll = 1
 ask_to_retry = True
+number_of_sides = 6
+
+print("\nWelcome to the dice rolling app, lets start rolling some dice.\n")
 
 # Rolls the dice and prints out the values.
 while roll_again:
     try:
+        number_of_sides = int(input("How many sides does the dice have ? "))
         number_of_dice = int(input("How many dice do you want to roll ? "))
         print("Ok, let's roll the dice.")
         print("Rolling...")
@@ -23,7 +27,7 @@ while roll_again:
         # Prints out the dice roll result(s) until the amount (number_of_dice) selected by the user is reached. 
         # When finished it resets the "current_dice_roll" back to its default value.
         while current_dice_roll <= number_of_dice:
-            print("Dice number", current_dice_roll, "is a value of:", randint(1, 6))
+            print("Dice number", current_dice_roll, "is a value of:", randint(1, number_of_sides))
             current_dice_roll += 1
         else:
             current_dice_roll = 1
