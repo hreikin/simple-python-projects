@@ -1,0 +1,2 @@
+# Random Number Guessing Game
+This folder contains a CLI and GUI version of a random number guessing game. The GUI version uses the PyQt5 framework. The player has to guess a number between 1 and 10 which is chosen at random. They get 3 tries to guess correctly before the game is over. Once the game is finished they can either retry or quit.
