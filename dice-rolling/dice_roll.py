@@ -7,18 +7,24 @@ from time import sleep
 seed()
 
 roll_again = True
+number_of_dice = 0
+current_dice_roll = 1
 
+# Rolls the dice and prints out the values.
 while roll_again:
-    print("Let's roll two dice.")
+    number_of_dice = int(input("How many dice do you want to roll ? "))
+    print("Ok, let's roll the dice.")
     print("Rolling...")
     sleep(1)
-    print("The values are: ")
-    print("Value 1 is: ", randint(1, 6))
-    print("Value 2 is: ", randint(1, 6))
+
+    while current_dice_roll <= number_of_dice:
+        print("Dice number", current_dice_roll, "is a value of:", randint(1, 6))
+        current_dice_roll += 1
+    else:
+        current_dice_roll = 1
 
     # Ask if the user wants to roll again.
     roll_again = input("Do you want to roll again (yes/no) ? ")
-
     # Check the users answer and either restart the loop or end it.
     if roll_again.lower().startswith("y") or roll_again.upper().startswith("Y"):
             print("Ok, let's carry on then.")
