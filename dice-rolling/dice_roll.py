@@ -29,10 +29,10 @@ while roll_again:
             current_dice_roll = 1
 
         while ask_to_retry:
-            # Ask if the user wants to roll again.
+            # Ask if the user wants to roll again. If the input is invalid then ask again.
             roll_again = input("Do you want to roll again (yes/no) ? ")
             
-            # Check the users answer and either restart the loop or end it.
+            # Check the users answer and either restarts the program or exits it.
             if roll_again.lower().startswith("y") or roll_again.upper().startswith("Y"):
                     print("Ok, let's carry on then.")
                     ask_to_retry = False
