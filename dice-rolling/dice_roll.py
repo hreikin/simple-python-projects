@@ -2,6 +2,7 @@
 from random import seed
 from random import randint
 from time import sleep
+import logging
 
 # Seed the random number generation. This method uses the users system time.
 seed()
@@ -11,6 +12,16 @@ roll_again = True
 number_of_dice = range(0, 1)
 ask_to_retry = True
 number_of_sides = 6
+
+# Initialize the logger and specify the level of logging.
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = "%(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("dice-rolling/debug.log", mode = "w"),
+        logging.StreamHandler()
+    ]
+)
 
 print("\nWelcome to the dice rolling app, lets start rolling some dice.\n")
 
@@ -36,22 +47,22 @@ while roll_again:
                     roll_again = input("Do you want to roll again (yes/no) ? ")
                     
                     # Check the users answer and either restarts the program or exits it.
-                    if roll_again.lower().startswith("y") or roll_again.upper().startswith("Y"):
+                    if roll_again.lower() in "yes":
                             print("Ok, let's carry on then.")
                             ask_to_retry = False
-                    elif roll_again.lower().startswith("n") or roll_again.upper().startswith("N"):
+                    elif roll_again.lower() in "no":
                             print("Ok, thank you.")
                             roll_again = False
                             ask_to_retry = False
                     else:
-                        print("***Invalid input, please try again.***")
+                        logging.info("Invalid input, please try again.")
                 else:
                     ask_to_retry = True
             else:
-                print("***Invalid input, please start again.***")
+                logging.info("Invalid input, please try again.")
         else:
-            print("***Invalid input, please start again.***")
+            logging.info("Invalid input, please try again.")
     except:
-        print("***Invalid input, please start again.***")
+        logging.info("Invalid input, please try again.")
 else:
     print("Goodbye!")

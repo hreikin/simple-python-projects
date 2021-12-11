@@ -1,9 +1,20 @@
 import os
 import platform
+import logging
 
 running = True
 ask_to_retry = True
 file_extension = ".txt"
+
+# Initialize the logger and specify the level of logging.
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = "%(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("notes/debug.log", mode = "w"),
+        logging.StreamHandler()
+    ]
+)
 
 # Check which OS the user has and figure out and join the home drive, path and "save_location" 
 # for windows, or just home directory and "save_location" for linux/mac. We use "os.path.join" 
@@ -85,15 +96,17 @@ while running:
         running = input("\nDo you want to create another note (yes/no) ? ")
         
         # Check the users answer and either restarts the program or exits it.
-        if running.lower().startswith("y") or running.upper().startswith("Y"):
+        if running.lower() in "yes":
                 print("\nOk, let's carry on then.")
                 ask_to_retry = False
-        elif running.lower().startswith("n") or running.upper().startswith("N"):
+        elif running.lower() in "no":
                 print("\nOk, thank you.")
                 running = False
                 ask_to_retry = False
         else:
-            print("***Invalid input, please try again.***")
+            # Logs the invalid input to the terminal. The print is just for spacing.
+            print("")
+            logging.info("Invalid input, please try again.")
     else:
         ask_to_retry = True
 else:

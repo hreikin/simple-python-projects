@@ -2,6 +2,8 @@
 from random import seed
 from random import randint
 from time import sleep
+import logging
+
 # Seed the random number generation. This method uses the users system time.
 seed()
 
@@ -11,6 +13,16 @@ min_number = 1
 max_number = 1
 continue_generating = True
 ask_to_retry = True
+
+# Initialize the logger and specify the level of logging.
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = "%(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("notes/debug.log", mode = "w"),
+        logging.StreamHandler()
+    ]
+)
 
 print("Welcome to the random number generator, lets generate some random numbers.")
 
@@ -46,24 +58,24 @@ while continue_generating:
                         continue_generating = input("Do you want to generate another random number (yes/no) ? ")
                         
                         # Check the users answer and either restarts the program or exits it.
-                        if continue_generating.lower().startswith("y") or continue_generating.upper().startswith("Y"):
+                        if continue_generating.lower() in "yes":
                                 print("Ok, let's carry on then.")
                                 ask_to_retry = False
-                        elif continue_generating.lower().startswith("n") or continue_generating.upper().startswith("N"):
+                        elif continue_generating.lower() in "no":
                                 print("Ok, thank you.")
                                 continue_generating = False
                                 ask_to_retry = False
                         else:
-                            print("***Invalid input, please try again.***")
+                            logging.info("Invalid input, please try again.")
                     else:
                         ask_to_retry = True
                 else:
-                    print("***Invalid input, please start again.***")
+                    logging.info("Invalid input, please start again.")
             else:
-                print("***Invalid input, please start again.***")
+                logging.info("Invalid input, please start again.")
         else:
-            print("***Invalid input, please start again.***")
+            logging.info("Invalid input, please start again.")
     except:
-        print("***Invalid input, please start again.***")
+        logging.info("Invalid input, please start again.")
 else:
     print("Goodbye!")
