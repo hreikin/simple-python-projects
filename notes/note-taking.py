@@ -39,7 +39,12 @@ with open_directory(save_location + file_name + file_extension) as file:
     file.close()
 
 # Show the saved files location and "file_content".
-print(f"The file was saved to: \"{save_location}/{file_name}{file_extension}\"")
+print(f"The file was saved to: \"{save_location}{file_name}{file_extension}\"")
+
+# The files content could be displayed using the line below but i would like to include 
+# multi-line note taking if possible. The code block below opens the file and reads it 
+# line by line.
+
 # print(f"The files content was:\n\n{file_content}")
 
 print("The files content was:\n")
