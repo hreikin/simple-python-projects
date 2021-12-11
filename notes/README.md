@@ -1,0 +1,2 @@
+# Note Taking App
+A simple CLI script for taking notes. The notes are saved to a directory it will create if it doesn't already exist. The user is asked for a filename and the content to include within the note. When it is finished it prints out the location of the note and its content to the user.
