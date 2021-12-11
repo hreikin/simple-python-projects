@@ -25,7 +25,22 @@ print(f"The current location files will be saved is \"{save_location}\".\n")
 file_name = input("Please give a name to the note you want to save: ")
 
 # Ask the user for the "file_content".
-file_content = input("Please write your note now and hit ENTER to save: ")
+print("""
+Please write your note now and hit CTRL+D (Linux/Mac) or CTRL+Z (Windows) to save.
+You can press ENTER to start writing on a new line: 
+""")
+file_content = []
+
+# This accepts the user input until it receives an EOFError.
+while True:
+    try:
+        line = input()
+    except EOFError:
+        break
+
+    # This appends each line with a newline character at the end which allows for 
+    # multiline input to be saved to the file.
+    file_content.append(line + "\n")
 
 # Create the file.
 def open_directory(path):
@@ -35,18 +50,16 @@ def open_directory(path):
 
 with open_directory(save_location + file_name + file_extension) as file:
 
-    file.write(file_content)
+    # Use "file.writelines" to write the individual lines to the file as "file.write" 
+    # only accepts a string as input.
+    file.writelines(file_content)
     file.close()
 
 # Show the saved files location and "file_content".
 print(f"The file was saved to: \"{save_location}{file_name}{file_extension}\"")
 
-# The files content could be displayed using the line below but i would like to include 
-# multi-line note taking if possible. The code block below opens the file and reads it 
-# line by line.
-
-# print(f"The files content was:\n\n{file_content}")
-
+# This opens the file and reads it line by line and prints it to the screen before 
+# closing the file.
 print("The files content was:\n")
 
 file = open(save_location + file_name + file_extension)
@@ -61,4 +74,4 @@ while True:
 
 file.close()
 
-print("\n\nGoodbye!")
+print("\nGoodbye!")
