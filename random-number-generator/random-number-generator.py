@@ -19,7 +19,7 @@ logging.basicConfig(
     level = logging.DEBUG,
     format = "%(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("notes/debug.log", mode = "w"),
+        logging.FileHandler("random-number-generator/debug.log", mode = "w"),
         logging.StreamHandler()
     ]
 )
