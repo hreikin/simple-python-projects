@@ -6,7 +6,8 @@ running = True
 ask_to_retry = True
 file_extension = ".txt"
 
-# Initialize the logger and specify the level of logging.
+# Initialize the logger and specify the level of logging. This will create/rewrite a log file 
+# and also print the messages to the console.
 logging.basicConfig(
     level = logging.DEBUG,
     format = "%(name)s - %(levelname)s - %(message)s",
