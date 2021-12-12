@@ -44,10 +44,23 @@ else:
 def create_note():
     try:
         print("\nOk, lets create a note.")
-        logging.info("Opening text editor for file creation.")
-        subprocess.call(f"{editor}", cwd=save_location, bufsize=1)
+        creating = True
+        ask_to_retry = True
+        while creating:
+            logging.info("Opening text editor for file creation.")
+            subprocess.call(f"{editor}", cwd=save_location, bufsize=1)
+            ask_to_retry = input("Do you want to create another note (yes/no) ? ")
+            if ask_to_retry.lower() in "yes":
+                print("\nOk, let's carry on then.")
+                ask_to_retry = True
+            elif ask_to_retry.lower() in "no":
+                print("\nOk, thank you.")
+                ask_to_retry = False
+                creating = False
+        else:
+            creating = True
     finally:
-        print("Text editor closed, returning to main menu.")
+        print("Returning to main menu.")
         logging.info("Closing text editor.")
         logging.info("Returning to main menu.")
 
