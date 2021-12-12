@@ -7,13 +7,26 @@ import subprocess
 running = True
 editor = os.getenv("EDITOR")
 
-# Initialize the logger and specify the level of logging. This will create/rewrite a log file.
-logging.basicConfig(
-    level = logging.DEBUG,
-    filename = "notes/app.log",
-    filemode = "w",
-    format = "%(asctime)s - %(levelname)s - %(message)s"
-    )
+# Initialize the logger and specify the level of logging. This will log "DEBUG" and higher 
+# messages to file and log WARNING and higher messages to the console.
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%d-%m %H:%M:%S',
+                    filename='notes/app.log',
+                    filemode='w')
+
+# Define a "handler" which writes "WARNING" messages or higher to the "sys.stderr".
+console = logging.StreamHandler()
+console.setLevel(logging.WARNING)
+
+# Set a format which is simpler for console messages.
+formatter = logging.Formatter('%(levelname)s: %(message)s')
+
+# Tell the console "handler" to use this format.
+console.setFormatter(formatter)
+
+# Add the "handler" to the "root logger".
+logging.getLogger('').addHandler(console)
 
 # Check which OS the user has and figure out and join the home drive, path and "save_location" 
 # for windows, or just home directory and "save_location" for linux/mac. We use "os.path.join" 
@@ -52,7 +65,6 @@ def edit_note():
         if os.path.exists(full_filepath):
             subprocess.call(f"{editor} {full_filepath}", bufsize=1, shell=True)
         else:
-            print(f"ERROR: The file {full_filepath} does not exist.")
             logging.error(f"The file {full_filepath} does not exist.")
             logging.info("Returning to the main menu.")
     finally:
@@ -71,17 +83,14 @@ def delete_note():
         # main menu.
         confirm_delete = input(f"Are you sure you want to delete {deleted_note} (yes/no) ? ")
         if confirm_delete.lower() in "yes":
-                print(f"Ok, deleting \"{deleted_note}\".")
                 logging.warning(f"Deleting \"{deleted_note}\".")
 
                 # Checks if the file exists before deleting it, if it doesn't exist it prints an error 
                 # to the console and logs it to the log file.
                 if os.path.exists(full_filepath):
                     os.remove(full_filepath)
-                    print(f"{deleted_note} has been deleted.")
                     logging.warning(f"{deleted_note} has been deleted.")
                 else:
-                    print(f"ERROR: The file {full_filepath} does not exist.")
                     logging.error(f"The file {full_filepath} does not exist.")
                     
         elif confirm_delete.lower() in "no":
@@ -89,7 +98,7 @@ def delete_note():
                 logging.info(f"Deleting cancelled.")
     finally:
         print("Returning to main menu.")
-        logging.info("Returning to menu.")
+        logging.info("Returning to main menu.")
 
 # Lists all the notes in the default directory and waits for user input before returning to the main menu.
 def list_notes():
@@ -107,6 +116,8 @@ def list_notes():
 # Runs the program and shows the user a menu to select items from. When an item is selected it 
 # runs the corresponding function. If the input is invalid it asks the user to try again.
 while running:
+
+    logging.info("Application started.")
     print("\nWelcome to the note taking app.")
     print("""
     1. Create a note.
@@ -121,17 +132,23 @@ while running:
     # Takes the users input and runs the appropriate function. If the input is invalid it asks 
     # the user to try again.
     if current_selection == "1":
+        logging.info("Create mode selected")
         create_note()
     elif current_selection == "2":
+        logging.info("Edit mode selected")
         edit_note()
     elif current_selection == "3":
+        logging.info("Delete mode selected")
         delete_note()
     elif current_selection == "4":
+        logging.info("List mode selected")
         list_notes()
     elif current_selection == "5":
+        logging.info("Exit mode selected")
         print("Ok, exiting program now.")
         running = False
     else:
-        print("Not a valid choice, please try again.")
+        logging.warning("Not a valid choice, please try again.")
 else:
     print("Goodbye!")
+    logging.info("Application closing.")
