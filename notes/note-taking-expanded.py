@@ -75,20 +75,39 @@ def create_note():
 def edit_note():
     try:
         print("\nOk, lets edit a note.")
-        file_name = input("What is the files name ? ")
-        full_filepath = os.path.join(save_location, file_name)
-        logging.info(f"Opening {full_filepath}")
+        editing = True
+        while editing:
+            ask_to_retry = True
+            file_name = input("What is the files name ? ")
+            full_filepath = os.path.join(save_location, file_name)
+            logging.info(f"Opening {full_filepath}")
 
-        # Checks if the file exists before opening the editor, if it doesn't it prints an 
-        # error to the console and logs it the log file.
-        if os.path.exists(full_filepath):
-            subprocess.call(f"{editor} {full_filepath}", bufsize=1, shell=True)
+            # Checks if the file exists before opening the editor, if it doesn't it prints an 
+            # error to the console and logs it the log file.
+            if os.path.exists(full_filepath):
+                subprocess.call(f"{editor} {full_filepath}", bufsize=1, shell=True)
+            else:
+                logging.error(f"The file {full_filepath} does not exist.")
+                logging.info("Returning to the menu.")
+            while ask_to_retry:
+                ask_to_retry = input("Do you want to edit another note (yes/no) ? ")
+                if ask_to_retry.lower() in "yes":
+                    print("\nOk, let's carry on then.")
+                    ask_to_retry = False
+                elif ask_to_retry.lower() in "no":
+                    print("\nOk, thank you.")
+                    ask_to_retry = False
+                    editing = False
+                else:
+                    logging.warning("Invalid input, please try again.")
+                    ask_to_retry = True
+            else:
+                ask_to_retry = False
         else:
-            logging.error(f"The file {full_filepath} does not exist.")
-            logging.info("Returning to the main menu.")
+            editing = True
     finally:
-        print("Text editor closed, returning to main menu.")
-        logging.info("Closing text editor.")
+        print("Editing Finished, returning to main menu.")
+        logging.info("Editing finished.")
         logging.info("Returning to main menu.")
 
 # Asks for the file name and extension of the note to be deleted and deletes it after a confirmation. 
