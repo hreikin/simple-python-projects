@@ -114,26 +114,62 @@ def edit_note():
 # If the file doesn't exist it reports an error and returns to the main menu.
 def delete_note():
     try:
-        deleted_note = input("\nGive the file name and its extension of the note you want to delete: ")
-        full_filepath = os.path.join(save_location, deleted_note)
+        deleting = True
+        while deleting:
+            ask_to_retry = True
+            confirm_delete = True
+            # Show the user a list of their notes so they can see the filenames.
+            print("\nHere is a list of your notes:\n")
+            logging.info(f"Listing notes in \"{save_location}\".")
+            list_of_notes = os.listdir(save_location)
+            for note in list_of_notes:
+                print(note)
 
-        # Confirms the user wants to delete the file, if they don't it cancels and returns to the 
-        # main menu.
-        confirm_delete = input(f"Are you sure you want to delete {deleted_note} (yes/no) ? ")
-        if confirm_delete.lower() in "yes":
-                logging.warning(f"Deleting \"{deleted_note}\".")
+            # Ask for the name and extension of the note they would like to delete.
+            deleted_note = input("\nGive the file name and its extension of the note you want to delete: ")
+            full_filepath = os.path.join(save_location, deleted_note)
 
-                # Checks if the file exists before deleting it, if it doesn't exist it prints an error 
-                # to the console and logs it to the log file.
-                if os.path.exists(full_filepath):
-                    os.remove(full_filepath)
-                    logging.warning(f"{deleted_note} has been deleted.")
+            # Confirms the user wants to delete the file, if they don't it cancels and returns to the 
+            # main menu.
+            while confirm_delete:
+                confirm_delete = input(f"Are you sure you want to delete {deleted_note} (yes/no) ? ")
+                if confirm_delete.lower() in "yes":
+                        logging.warning(f"Deleting \"{deleted_note}\".")
+
+                        # Checks if the file exists before deleting it, if it doesn't exist it prints an error 
+                        # to the console and logs it to the log file.
+                        if os.path.exists(full_filepath):
+                            os.remove(full_filepath)
+                            logging.warning(f"{deleted_note} has been deleted.")
+                            confirm_delete = False
+                        else:
+                            logging.error(f"The file {full_filepath} does not exist.")
+                            confirm_delete = False                            
+                elif confirm_delete.lower() in "no":
+                        print("Ok, cancelling.")
+                        logging.info(f"Deleting {full_filepath} cancelled.")
+                        confirm_delete = False
                 else:
-                    logging.error(f"The file {full_filepath} does not exist.")
-                    
-        elif confirm_delete.lower() in "no":
-                print("Ok, cancelling.")
-                logging.info(f"Deleting cancelled.")
+                    logging.warning("Invalid input, please try again.")
+                    confirm_delete = True
+            else:
+                confirm_delete = False
+            while ask_to_retry:
+                ask_to_retry = input("Do you want to delete another note (yes/no) ? ")
+                if ask_to_retry.lower() in "yes":
+                    print("\nOk, let's carry on then.")
+                    ask_to_retry = False
+                elif ask_to_retry.lower() in "no":
+                    print("\nOk, thank you.")
+                    ask_to_retry = False
+                    deleting = False
+                else:
+                    logging.warning("Invalid input, please try again.")
+                    ask_to_retry = True
+            else:
+                ask_to_retry = False
+        else:
+            deleting = True
     finally:
         print("Returning to main menu.")
         logging.info("Returning to main menu.")
