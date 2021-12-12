@@ -180,7 +180,7 @@ def list_notes():
 # messages to file and log WARNING and higher messages to the console.
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                    datefmt='%d-%m %H:%M:%S',
+                    datefmt='%d-%m-%y %H:%M:%S',
                     filename='notes/app.log',
                     filemode='w')
 
