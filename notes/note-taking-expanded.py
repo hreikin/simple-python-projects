@@ -19,6 +19,7 @@ def create_note():
             # Asks if the user wants to add another note, if they don't it returns them to the 
             # main menu.
             while ask_to_retry:
+                logging.info("Closing text editor.")
                 ask_to_retry = input("Do you want to create another note (yes/no) ? ")
                 if ask_to_retry.lower() in "yes":
                     print("\nOk, let's carry on then.")
@@ -36,7 +37,7 @@ def create_note():
             creating = True
     finally:
         print("Returning to main menu.")
-        logging.info("Closing text editor.")
+        logging.info("Creating finished.")
         logging.info("Returning to main menu.")
 
 # Asks the user for a file name and then opens it. If it doesn't exist it shows an error and 
@@ -59,11 +60,11 @@ def edit_note():
 
             file_name = input("\nWhat is the files name ? ")
             full_filepath = os.path.join(save_location, file_name)
-            logging.info(f"Opening \"{full_filepath}\".")
 
             # Checks if the file exists before opening the editor, if it doesn't it prints an 
             # error to the console and logs it the log file.
             if os.path.exists(full_filepath):
+                logging.info(f"Opening \"{full_filepath}\".")
                 subprocess.call(f"{editor} {full_filepath}", bufsize=1, shell=True)
             else:
                 logging.error(f"The file \"{full_filepath}\" does not exist.")
@@ -157,6 +158,7 @@ def delete_note():
             deleting = True
     finally:
         print("Returning to main menu.")
+        logging.info("Deleting finished.")
         logging.info("Returning to main menu.")
 
 # Lists all the notes in the default directory and waits for user input before returning to the main menu.
@@ -170,7 +172,8 @@ def list_notes():
         input("\nPress any key to return to the menu.")
     finally:
         print("Returning to main menu.")
-        logging.info("Returning to menu.")
+        logging.info("Listing finished.")
+        logging.info("Returning to main menu.")
 
 ################################################ Setup Logging ################################################
 # Initialize the logger and specify the level of logging. This will log "DEBUG" and higher 
@@ -216,7 +219,6 @@ else:
 # runs the corresponding function. If the input is invalid it asks the user to try again.
 while running:
 
-    logging.info("Application started.")
     print("\nWelcome to the note taking app.")
     print("""
     1. Create a note.
