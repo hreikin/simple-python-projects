@@ -48,7 +48,12 @@ def create_note():
         while creating:
             ask_to_retry = True
             logging.info("Opening text editor for file creation.")
+
+            # Opens the systems default editor.
             subprocess.call(f"{editor}", cwd=save_location, bufsize=1)
+
+            # Asks if the user wants to add another note, if they don't it returns them to the 
+            # main menu.
             while ask_to_retry:
                 ask_to_retry = input("Do you want to create another note (yes/no) ? ")
                 if ask_to_retry.lower() in "yes":
@@ -76,6 +81,8 @@ def edit_note():
     try:
         print("\nOk, lets edit a note.")
         editing = True
+
+        # Asks the user for a filename and creates the full path for it.
         while editing:
             ask_to_retry = True
             file_name = input("What is the files name ? ")
@@ -89,6 +96,9 @@ def edit_note():
             else:
                 logging.error(f"The file {full_filepath} does not exist.")
                 logging.info("Returning to the menu.")
+
+            # Asks the user if they want to edit another note, if they don't it returns them 
+            # to the main menu.
             while ask_to_retry:
                 ask_to_retry = input("Do you want to edit another note (yes/no) ? ")
                 if ask_to_retry.lower() in "yes":
@@ -118,6 +128,7 @@ def delete_note():
         while deleting:
             ask_to_retry = True
             confirm_delete = True
+
             # Show the user a list of their notes so they can see the filenames.
             print("\nHere is a list of your notes:\n")
             logging.info(f"Listing notes in \"{save_location}\".")
@@ -129,8 +140,8 @@ def delete_note():
             deleted_note = input("\nGive the file name and its extension of the note you want to delete: ")
             full_filepath = os.path.join(save_location, deleted_note)
 
-            # Confirms the user wants to delete the file, if they don't it cancels and returns to the 
-            # main menu.
+            # Confirms the user wants to delete the file, if they don't it cancels and asks if they would like 
+            # to delete another note.
             while confirm_delete:
                 confirm_delete = input(f"Are you sure you want to delete {deleted_note} (yes/no) ? ")
                 if confirm_delete.lower() in "yes":
@@ -154,6 +165,8 @@ def delete_note():
                     confirm_delete = True
             else:
                 confirm_delete = False
+            
+            # Asks the user if they want to delete another note, if they don't it returns them to the main menu.
             while ask_to_retry:
                 ask_to_retry = input("Do you want to delete another note (yes/no) ? ")
                 if ask_to_retry.lower() in "yes":
