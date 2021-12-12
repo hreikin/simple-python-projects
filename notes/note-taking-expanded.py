@@ -59,14 +59,14 @@ def edit_note():
 
             file_name = input("\nWhat is the files name ? ")
             full_filepath = os.path.join(save_location, file_name)
-            logging.info(f"Opening {full_filepath}")
+            logging.info(f"Opening \"{full_filepath}\".")
 
             # Checks if the file exists before opening the editor, if it doesn't it prints an 
             # error to the console and logs it the log file.
             if os.path.exists(full_filepath):
                 subprocess.call(f"{editor} {full_filepath}", bufsize=1, shell=True)
             else:
-                logging.error(f"The file {full_filepath} does not exist.")
+                logging.error(f"The file \"{full_filepath}\" does not exist.")
                 logging.info("Returning to the menu.")
 
             # Asks the user if they want to edit another note, if they don't it returns them 
@@ -123,14 +123,14 @@ def delete_note():
                         # to the console and logs it to the log file.
                         if os.path.exists(full_filepath):
                             os.remove(full_filepath)
-                            logging.warning(f"{deleted_note} has been deleted.")
+                            logging.warning(f"\"{deleted_note}\" has been deleted.")
                             confirm_delete = False
                         else:
-                            logging.error(f"The file {full_filepath} does not exist.")
+                            logging.error(f"The file \"{full_filepath}\" does not exist.")
                             confirm_delete = False                            
                 elif confirm_delete.lower() in "no":
                         print("Ok, cancelling.")
-                        logging.info(f"Deleting {full_filepath} cancelled.")
+                        logging.info(f"Deleting \"{full_filepath}\" cancelled.")
                         confirm_delete = False
                 else:
                     logging.warning("Invalid input, please try again.")
