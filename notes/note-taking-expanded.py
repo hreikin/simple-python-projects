@@ -27,7 +27,7 @@ else:
     save_location = os.path.join(os.getenv("HOME"),
     "python-notes/")
 
-# Opens up the systems default editor in the directory the notes are saved.
+# Opens the systems default editor in the directory the notes are saved.
 def create_note():
     try:
         print("\nOk, lets create a note.")
@@ -46,11 +46,14 @@ def edit_note():
         file_name = input("What is the files name ? ")
         full_filepath = os.path.join(save_location, file_name)
         logging.info(f"Opening {full_filepath}")
+
+        # Checks if the file exists before opening the editor, if it doesn't it prints an 
+        # error to the console and logs it the log file.
         if os.path.exists(full_filepath):
             subprocess.call(f"{editor} {full_filepath}", bufsize=1, shell=True)
         else:
             print(f"ERROR: The file {full_filepath} does not exist.")
-            logging.error(f"ERROR: The file {full_filepath} does not exist.")
+            logging.error(f"The file {full_filepath} does not exist.")
             logging.info("Returning to the main menu.")
     finally:
         print("Text editor closed, returning to main menu.")
@@ -63,17 +66,24 @@ def delete_note():
     try:
         deleted_note = input("\nGive the file name and its extension of the note you want to delete: ")
         full_filepath = os.path.join(save_location, deleted_note)
+
+        # Confirms the user wants to delete the file, if they don't it cancels and returns to the 
+        # main menu.
         confirm_delete = input(f"Are you sure you want to delete {deleted_note} (yes/no) ? ")
         if confirm_delete.lower() in "yes":
                 print(f"Ok, deleting \"{deleted_note}\".")
                 logging.warning(f"Deleting \"{deleted_note}\".")
+
+                # Checks if the file exists before deleting it, if it doesn't exist it prints an error 
+                # to the console and logs it to the log file.
                 if os.path.exists(full_filepath):
                     os.remove(full_filepath)
                     print(f"{deleted_note} has been deleted.")
                     logging.warning(f"{deleted_note} has been deleted.")
                 else:
                     print(f"ERROR: The file {full_filepath} does not exist.")
-                    logging.error(f"ERROR: The file {full_filepath} does not exist.")
+                    logging.error(f"The file {full_filepath} does not exist.")
+                    
         elif confirm_delete.lower() in "no":
                 print("Ok, cancelling.")
                 logging.info(f"Deleting cancelled.")
@@ -108,6 +118,8 @@ while running:
 
     current_selection = input("Type in a number to make a selection: ")
 
+    # Takes the users input and runs the appropriate function. If the input is invalid it asks 
+    # the user to try again.
     if current_selection == "1":
         create_note()
     elif current_selection == "2":
