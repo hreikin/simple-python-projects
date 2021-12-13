@@ -3,7 +3,6 @@ import platform
 import logging
 import subprocess
 
-import questions
 
 DEFAULT_EDITOR = 'notepad'
 ANOTHER_NOTE_QUESTION = "Do you want to create another note (yes/no) ? "
@@ -84,6 +83,55 @@ def main():
     return r
 
 
+def ask_number(q=None):
+    default = "Type in a number to make a selection: "
+    try:
+        val = input(q or default)
+        int_val = int(val)
+    except ValueError as e:
+        print("woops; that's not a number...")
+        return ask_number(q)
+
+    return int_val
+
+
+def as_mode(q=None):
+
+    int_val = ask_number(q)
+
+    funcs = [
+        create_note,
+        edit_note,
+        delete_note,
+        list_notes,
+    ]
+
+    my_func = funcs[int_val - 1]
+    my_func()
+
+    # Takes the users input and runs the appropriate function. If the input is invalid it asks
+    # the user to try again.
+    if val == "1":
+        log("Create mode selected")
+        create_note()
+    elif val == "2":
+        log("Edit mode selected")
+        edit_note()
+    elif val == "3":
+        log("Delete mode selected")
+        delete_note()
+    elif val == "4":
+        log("List mode selected")
+        list_notes()
+    elif val == "5":
+        log("Exit mode selected")
+        print("Ok, exiting program now.")
+        running = False
+    else:
+        logging.warning("Not a valid choice, please try again.")
+
+
+
 def print_options(options):
     """Prints something like this for a dict of options:
 
@@ -128,7 +176,7 @@ def derek_loop(options):
 
         q = "Type in a number to make a selection: "
         # current_selection = input(q)
-        int_current_selection = questions.ask_number(q)
+        int_current_selection = ask_number(q)
 
         choices = tuple(options.values())
         # Takes the users input and runs the appropriate function. If the input is invalid it asks
