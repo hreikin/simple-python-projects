@@ -6,12 +6,19 @@ import os
 running = True
 
 to_do_file = "to-do-list/to-do.data"
+completed_file = "to-do-list/completed.data"
 
 if os.path.exists(to_do_file):
     with open(to_do_file, "rb") as readfile:
         to_do_list = pickle.load(readfile)
 else:
     to_do_list = []
+
+if os.path.exists(completed_file):
+    with open(completed_file, "rb") as readfile:
+        completed_list = pickle.load(readfile)
+else:
+    completed_list = []
 
 def add_item():
     with open(to_do_file, "wb") as writefile:
@@ -35,6 +42,17 @@ def show_list():
         with open(to_do_file, "rb") as readfile:
             to_do_list = pickle.load(readfile)
             for index, item in enumerate(to_do_list, start = 1):
+                print(f"{index}. {item}")
+            input("Press ENTER to return to the menu. ")
+    else:
+        logging.info("No items in the list.")
+        input("Press ENTER to return to the menu. ")
+
+def show_completed_list():
+    if os.path.exists(completed_file):
+        with open(completed_file, "rb") as readfile:
+            completed_list = pickle.load(readfile)
+            for index, item in enumerate(completed_list, start = 1):
                 print(f"{index}. {item}")
             input("Press ENTER to return to the menu. ")
     else:
@@ -98,6 +116,7 @@ while running:
         show_list()
     elif current_selection == "7":
         logging.info("Ok, lets show the \"Completed\" list.")
+        show_completed_list()
     elif current_selection == "8":
         logging.info("Ok, exiting program now.")
         running = False
