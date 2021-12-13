@@ -27,11 +27,22 @@ def add_item():
         pickle.dump(to_do_list, writefile)
         logging.info(f"\"{new_item}\" has been added to the list.")
 
+def edit_item():
+    for index, item in enumerate(to_do_list, start = 1):
+        print(f"{index}. {item}")
+    with open(to_do_file, "wb") as editfile:
+        edited_item = int(input("Enter the number of the item you want to edit: "))
+        edited_item -= 1
+        edited_item_input = input("What would you like to change it to ? ")
+        to_do_list[edited_item] = edited_item_input
+        pickle.dump(to_do_list, editfile)
+        logging.info(f"Item number {edited_item + 1} has been edited.")
+
 def delete_item():
     for index, item in enumerate(to_do_list, start = 1):
         print(f"{index}. {item}")
     with open(to_do_file, "wb") as deletefile:
-        delete_item = int(input("Enter the number of the item you want to delete ? "))
+        delete_item = int(input("Enter the number of the item you want to delete: "))
         delete_item -= 1
         to_do_list.pop(delete_item)
         pickle.dump(to_do_list, deletefile)
@@ -104,6 +115,7 @@ while running:
         add_item()
     elif current_selection == "2":
         logging.info("Ok, lets edit an item.")
+        edit_item()
     elif current_selection == "3":
         logging.info("Ok, lets delete an item.")
         delete_item()
