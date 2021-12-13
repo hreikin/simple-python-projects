@@ -7,6 +7,7 @@ This repository contains simple projects I have created while learning python. T
 - Pong - A game of Pong using the Kivy GUI framework.
 - Random Number Generator - A CLI script to generate one or multiple random numbers within a user specified range.
 - Random Number Guessing Game - A CLI and GUI (PyQt5) version of a number guessing game.
+- To Do - A simple CLI based To Do list.
 
 ## Install
 To install the required modules for this repository simply run the following commands to set up a virtual environment and then install the requirements:
