@@ -1,10 +1,35 @@
+import sys
+import logging
+
 running = True
 to_do_list = []
 completed = []
 
+################################################ Setup Logging ################################################
+# Initialize the logger and specify the level of logging. This will log "DEBUG" and higher 
+# messages to file and log WARNING and higher messages to the console.
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-8s %(levelname)-8s %(message)s',
+                    datefmt='%d-%m-%y %H:%M:%S',
+                    filename='to-do-list/app.log',
+                    filemode='w')
+
+# Define a "handler" which writes "INFO" messages or higher to the "sys.stderr".
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+
+# Set a format which is simpler for console messages. This just prints the message with no other details.
+formatter = logging.Formatter('%(message)s')
+
+# Tell the console "handler" to use this format.
+console.setFormatter(formatter)
+
+# Add the "handler" to the "root logger".
+logging.getLogger('').addHandler(console)
+
 while running:
 
-    print("\n Welcome to the To Do app.")
+    print("\n Welcome to the \"To Do\" app.")
     print("""
     1. Create an item.
     2. Edit an item.
@@ -21,23 +46,24 @@ while running:
     # Takes the users input and runs the appropriate function. If the input is invalid it asks 
     # the user to try again.
     if current_selection == "1":
-        print("Ok, lets create an item.")
+        logging.info("Ok, lets create an item.")
     elif current_selection == "2":
-        print("Ok, lets edit an item.")
+        logging.info("Ok, lets edit an item.")
     elif current_selection == "3":
-        print("Ok, lets delete an item.")
+        logging.info("Ok, lets delete an item.")
     elif current_selection == "4":
-        print("Ok, lets sort the items.")
+        logging.info("Ok, lets sort the items.")
     elif current_selection == "5":
-        print("Ok, lets mark an item complete.")
+        logging.info("Ok, lets mark an item complete.")
     elif current_selection == "6":
-        print("Ok, lets show the \"To Do\" list.")
+        logging.info("Ok, lets show the \"To Do\" list.")
     elif current_selection == "7":
-        print("Ok, lets show the \"Completed\" list.")
+        logging.info("Ok, lets show the \"Completed\" list.")
     elif current_selection == "8":
-        print("Ok, exiting program now.")
+        logging.info("Ok, exiting program now.")
         running = False
     else:
-        print("Not a valid choice, please try again.")
+        logging.info("Not a valid choice, please try again.")
 else:
-    print("Goodbye!")
+    logging.info("Goodbye!")
+    sys.exit(0)
