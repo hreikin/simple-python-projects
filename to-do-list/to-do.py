@@ -1,9 +1,33 @@
 import sys
 import logging
+import pickle
+import os
 
 running = True
-to_do_list = []
-completed = []
+
+to_do_file = "to-do-list/to-do.data"
+
+if os.path.exists(to_do_file):
+    with open(to_do_file, "rb") as readfile:
+        to_do_list = pickle.load(readfile)
+else:
+    to_do_list = []
+
+def add_item():
+    with open(to_do_file, "wb") as writefile:
+        new_item = input("What do you want to add ? ")
+        to_do_list.append(new_item)
+        pickle.dump(to_do_list, writefile)
+        logging.info(f"\"{new_item}\" has been added to the list.")
+
+def show_list():
+    if os.path.exists(to_do_file):
+        with open(to_do_file, "rb") as readfile:
+            to_do_list = pickle.load(readfile)
+            for index, item in enumerate(to_do_list, start = 1):
+                print(f"{index}. {item}")
+    else:
+        logging.info("No items in the list.")
 
 ################################################ Setup Logging ################################################
 # Initialize the logger and specify the level of logging. This will log "DEBUG" and higher 
@@ -47,6 +71,7 @@ while running:
     # the user to try again.
     if current_selection == "1":
         logging.info("Ok, lets create an item.")
+        add_item()
     elif current_selection == "2":
         logging.info("Ok, lets edit an item.")
     elif current_selection == "3":
@@ -57,6 +82,7 @@ while running:
         logging.info("Ok, lets mark an item complete.")
     elif current_selection == "6":
         logging.info("Ok, lets show the \"To Do\" list.")
+        show_list()
     elif current_selection == "7":
         logging.info("Ok, lets show the \"Completed\" list.")
     elif current_selection == "8":
