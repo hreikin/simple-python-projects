@@ -20,14 +20,26 @@ def add_item():
         pickle.dump(to_do_list, writefile)
         logging.info(f"\"{new_item}\" has been added to the list.")
 
+def delete_item():
+    for index, item in enumerate(to_do_list, start = 1):
+        print(f"{index}. {item}")
+    with open(to_do_file, "wb") as deletefile:
+        delete_item = int(input("Enter the number of the item you want to delete ? "))
+        delete_item -= 1
+        to_do_list.pop(delete_item)
+        pickle.dump(to_do_list, deletefile)
+        logging.info(f"Item number {delete_item + 1} has been removed.")
+
 def show_list():
     if os.path.exists(to_do_file):
         with open(to_do_file, "rb") as readfile:
             to_do_list = pickle.load(readfile)
             for index, item in enumerate(to_do_list, start = 1):
                 print(f"{index}. {item}")
+            input("Press ENTER to return to the menu. ")
     else:
         logging.info("No items in the list.")
+        input("Press ENTER to return to the menu. ")
 
 ################################################ Setup Logging ################################################
 # Initialize the logger and specify the level of logging. This will log "DEBUG" and higher 
@@ -76,6 +88,7 @@ while running:
         logging.info("Ok, lets edit an item.")
     elif current_selection == "3":
         logging.info("Ok, lets delete an item.")
+        delete_item()
     elif current_selection == "4":
         logging.info("Ok, lets sort the items.")
     elif current_selection == "5":
