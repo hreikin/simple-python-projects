@@ -7,12 +7,21 @@ import os
 running = True
 to_do_file = "to-do-list/to-do.data"
 
+# import json
+# from pathlib import Path
+# shelve, yaml, json
+# collections.defaultdict
+#
+
 # Checks if file exists and loads it, if it doesn't sets the list to empty.
 if os.path.exists(to_do_file):
     with open(to_do_file, "rb") as readfile:
         to_do_list = pickle.load(readfile)
 else:
     to_do_list = []
+
+# tdp = Path(to_do_file)
+# to_do_list = pickle.loads(tdp.read_text() if tdp.exists() else '[]')
 
 # Asks the user what they want to add to the list and appends it to the bottom and saves the file.
 def add_item():
@@ -26,6 +35,7 @@ def add_item():
 def edit_item():
     for index, item in enumerate(to_do_list, start = 1):
         print(f"{index}. {item}")
+
     with open(to_do_file, "wb") as editfile:
         edited_item = int(input("Enter the number of the item you want to edit: "))
         edited_item -= 1
@@ -33,6 +43,7 @@ def edit_item():
         to_do_list[edited_item] = edited_item_input
         pickle.dump(to_do_list, editfile)
         logging.info(f"Item number {edited_item + 1} has been edited.")
+
 
 # Asks the user which item they would like to delete and then removes it and saves the list file.
 def delete_item():
@@ -45,7 +56,7 @@ def delete_item():
         pickle.dump(to_do_list, deletefile)
         logging.info(f"Item number {delete_item + 1} has been removed.")
 
-# Shows the user the current list and waits for input before returning to the menu. If no file exists 
+# Shows the user the current list and waits for input before returning to the menu. If no file exists
 # it prints a message explaining so and waits for input.
 def show_list():
     if os.path.exists(to_do_file):
@@ -59,7 +70,7 @@ def show_list():
         input("Press ENTER to return to the menu. ")
 
 ################################################ Setup Logging ################################################
-# Initialize the logger and specify the level of logging. This will log "DEBUG" and higher 
+# Initialize the logger and specify the level of logging. This will log "DEBUG" and higher
 # messages to file and log WARNING and higher messages to the console.
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(name)-8s %(levelname)-8s %(message)s',
@@ -93,7 +104,7 @@ while running:
 
     current_selection = input("Type in a number to make a selection: ")
 
-    # Takes the users input and runs the appropriate function. If the input is invalid it asks 
+    # Takes the users input and runs the appropriate function. If the input is invalid it asks
     # the user to try again.
     if current_selection == "1":
         logging.info("Ok, lets create an item.")
