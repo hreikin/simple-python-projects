@@ -1,0 +1,2 @@
+# To Do List
+A simple CLI based To Do list using the pickle module. This was mainly done to practice using pickle rather than because pickle offers any obvious benefits. The user can add, edit, delete and show items in the To Do list with a simple numbered menu selection.
