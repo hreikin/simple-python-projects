@@ -7,6 +7,8 @@ def collatz(number):
             number = 3* number + 1
             print("The odd number is now: ", number)
 
-
-number = int(input("Enter a number: "))
-collatz(number)
+try:
+    number = int(input("Enter a number: "))
+    collatz(number)
+except ValueError:
+    print("Please enter an integer value.")
