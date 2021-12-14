@@ -31,3 +31,13 @@ grid = [['.', '.', '.', '.', '.', '.'],
         ['0', '0', '0', '0', '.', '.'],
         ['.', '0', '0', '.', '.', '.'],
         ['.', '.', '.', '.', '.', '.']]
+
+# Rotates the grid by 90 degress by iterating through the lists printing them. 
+# It only adds a newline to the last entry per row because of the "< 8" and 
+# using the "end = " separator.
+for i in range(6):
+    for a in range(9):
+        if a < 8:
+            print(grid[a][i], end="")
+        else:
+            print(grid[a][i])
