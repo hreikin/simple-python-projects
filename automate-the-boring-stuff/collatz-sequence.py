@@ -4,6 +4,11 @@
 # Then write a program that lets the user type in an integer and that keeps
 # calling collatz() on that number until the function returns the value 1 .
 
+# Add try and except statements to the project to detect whether the
+# user types in a noninteger string. Normally, the int() function will raise a
+# ValueError error if it is passed a noninteger string. In the except clause, 
+# print a message to the user saying they must enter an integer.
+
 def collatz(number):
     while number != 1:
         if number % 2 == 0:
