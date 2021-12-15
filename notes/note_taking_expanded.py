@@ -1,17 +1,31 @@
+# Import modules.
 import os
 import platform
 import logging
 import subprocess
 
+# Import my modules
 import questions
 
+############################################## Variable Defaults ##############################################
+# Default values for variables.
+running = True
+editor = os.getenv("EDITOR")
 DEFAULT_EDITOR = 'notepad'
 ANOTHER_NOTE_QUESTION = "Do you want to create another note (yes/no) ? "
-############################################## Define Functions ##############################################
-# Opens the systems default editor in the directory the notes are saved.
-
 log = logging.info
 
+# Check which OS the user has and figure out and join the home drive, path and "save_location"
+# for windows, or just home directory and "save_location" for linux/mac. We use "os.path.join"
+# instead of joining strings to ensure the path has the correct format expected by the users
+# operating system.
+if platform.platform().startswith("Windows"):
+    save_location = os.path.join(os.getenv("HOMEDRIVE"),
+                                os.getenv("HOMEPATH"),
+                                "python-notes/")
+else:
+    save_location = os.path.join(os.getenv("HOME"),
+    "python-notes/")
 
 ################################################ Setup Logging ################################################
 # Initialize the logger and specify the level of logging. This will log "DEBUG" and higher
@@ -35,24 +49,8 @@ console.setFormatter(formatter)
 # Add the "handler" to the "root logger".
 logging.getLogger('').addHandler(console)
 
-
-############################################## Variable Defaults ##############################################
-# Default values for variables.
-running = True
-editor = os.getenv("EDITOR")
-
-# Check which OS the user has and figure out and join the home drive, path and "save_location"
-# for windows, or just home directory and "save_location" for linux/mac. We use "os.path.join"
-# instead of joining strings to ensure the path has the correct format expected by the users
-# operating system.
-if platform.platform().startswith("Windows"):
-    save_location = os.path.join(os.getenv("HOMEDRIVE"),
-                                os.getenv("HOMEPATH"),
-                                "python-notes/")
-else:
-    save_location = os.path.join(os.getenv("HOME"),
-    "python-notes/")
-
+############################################## Define Functions ##############################################
+# Opens the systems default editor in the directory the notes are saved.
 
 def main():
     options = {
