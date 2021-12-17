@@ -1,5 +1,8 @@
+asgiref==3.4.1
 certifi==2021.10.8
 charset-normalizer==2.0.9
+Django==4.0
+django-environ==0.8.1
 docutils==0.18.1
 ffpyplayer==4.3.2
 idna==3.3
@@ -12,4 +15,5 @@ PyQt5==5.15.6
 PyQt5-Qt5==5.15.2
 PyQt5-sip==12.9.0
 requests==2.26.0
+sqlparse==0.4.2
 urllib3==1.26.7
