@@ -19,9 +19,6 @@ class Person(object):
         self.phone = phone
         self.address = address
 
-    # def __str__(self):
-    #     return "{} {:>25} {:>25} {:>25}".format(self.name, self.email, self.phone, self.address)
-
 class AddressBookApp(object):
     def __init__(self):
         super().__init__()
@@ -44,29 +41,10 @@ class AddressBookApp(object):
         if not self.address_book:
             print("No contacts found.")
             return
-        # print(f"{'Name':<25} {'Email':<25} {'Phone':<25} {'Address':<25}")
+
         self.print_line(name="Name", email="Email", phone="Phone", address="Address")
         for info in self.address_book.values():
-            # print(f"{info.name:<25} {info.email:<25} {info.phone:<25} {info.address:<25}")
             self.print_line(**vars(info))
-
-    # def view_all(self):
-    #     if self.address_book:
-    #         # print(f"{'Name':<25} {'Email':<25} {'Phone':<25} {'Address':<25}")
-    #         self.print_line(name="Name", email="Email", phone="Phone", address="Address")
-    #         for info in self.address_book.values():
-    #             # print(f"{info.name:<25} {info.email:<25} {info.phone:<25} {info.address:<25}")
-    #             self.print_line(**vars(info))
-    #     else:
-    #         print("No contacts found.")
-
-    # def view_all(self):
-    #     if self.address_book:
-    #         print("Name".ljust(25), "Email".ljust(25), "Phone".ljust(25), "Address".ljust(50))
-    #         for info in self.address_book.values():
-    #             print(info)
-    #     else:
-    #         print("No contacts found.")
 
     def add_contact(self):
         name = input("Name: ")
