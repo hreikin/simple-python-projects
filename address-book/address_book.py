@@ -21,7 +21,6 @@ class Person(object):
 
 class AddressBookApp(object):
     def __init__(self):
-        super().__init__()
         self.save_location = Path("address-book/address_book.data")
         self.address_book = {}
         if self.save_location.exists():
@@ -41,26 +40,52 @@ class AddressBookApp(object):
         if not self.address_book:
             print("No contacts found.")
             return
-
         self.print_line(name="Name", email="Email", phone="Phone", address="Address")
         for info in self.address_book.values():
             self.print_line(**vars(info))
 
     def add_contact(self):
-        name = input("Name: ")
+        print("Ok, let's add a new contact. Please provide the following info.")
+        name = input("Name: ").title()
         email = input("Email: ")
         phone = input("Phone Number: ")
-        address = input("Address: ")
+        address = input("Address: ").title()
         if name not in self.address_book:
             self.address_book[name] = Person(name, email, phone, address)
             self.save_details()
         else:
             print("Contact is already present.")
 
+    def delete_contact(self):
+        name = input("What is the name of the contact you wish to delete: ").title()
+        if name not in self.address_book:
+            print("There is no contact by that name.")
+            return
+        confirm_delete = f"Are you sure you want to delete the info for {name.title()} (yes/no) ? "
+        if self.ask_question(confirm_delete) == True:
+            self.address_book.pop(name)
+            print(f"Ok, {name} is deleted.")
+            self.save_details()
+
+    def ask_question(self, question=None):
+        DEFAULT = "Are you sure you want to do this (yes/no) ? "
+        q = question or DEFAULT
+        val = input(q).lower()
+        if val.lower() in "yes":
+            return True
+        if val.lower() in "no":
+            print("OK, cancelling.")
+            return False
+        # Invalid input response.
+        print('Invalid input, please try again.')
+        return self.ask_question(question)
 
 myperson = Person()
 myclass = AddressBookApp()
 
+# Testing things work.
 myclass.view_all()
-# myclass.add_contact()
-# myclass.view_all()
+myclass.add_contact()
+myclass.view_all()
+myclass.delete_contact()
+myclass.view_all()
