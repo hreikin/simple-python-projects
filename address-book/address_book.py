@@ -45,33 +45,44 @@ class AddressBookApp(object):
             self.print_line(**vars(info))
 
     def add_contact(self):
-        print("Ok, let's add a new contact. Please provide the following info.")
-        name = input("Name: ").title()
-        if name in self.address_book:
-            print("A contact is already present with that name.")
-            return
-        email = input("Email: ")
-        phone = input("Phone Number: ")
-        address = input("Address: ").title()
-        self.address_book[name] = Person(name, email, phone, address)
-        self.save_details()
-        print("Contact successfully added.")
+        while True:
+            print("Ok, let's add a new contact. Please provide the following info.")
+            name = input("Name: ").title()
+            if name in self.address_book:
+                print("A contact is already present with that name.")
+                pass
+            else:
+                email = input("Email: ")
+                phone = input("Phone Number: ")
+                address = input("Address: ").title()
+                self.address_book[name] = Person(name, email, phone, address)
+                self.save_details()
+                print("Contact successfully added.")
+            if self.ask_question() == True:
+                pass
+            else:
+                return
 
     def delete_contact(self):
-        name = input("What is the name of the contact you wish to delete: ").title()
-        if name not in self.address_book:
-            print("There is no contact by that name.")
-            return
-        confirm_delete = f"Are you sure you want to delete the info for {name.title()} (yes/no) ? "
-        if self.ask_question(confirm_delete) == True:
-            self.address_book.pop(name)
-            print(f"Ok, {name} is deleted.")
-            self.save_details()
+        while True:
+            name = input("What is the name of the contact you wish to delete: ").title()
+            if name not in self.address_book:
+                print("There is no contact by that name.")
+                pass
+            # confirm_delete = f"Are you sure you want to delete the info for {name.title()} (yes/no) ? "
+            elif self.ask_question(None) == True:
+                self.address_book.pop(name)
+                print(f"Ok, {name} is deleted.")
+                self.save_details()
+            if self.ask_question() == True:
+                pass
+            else:
+                return
 
-    def ask_question(self, question=None):
-        DEFAULT = "Are you sure you want to do this (yes/no) ? "
-        q = question or DEFAULT
-        val = input(q).lower()
+    def ask_question(self, question="Do you want to do this again (yes/no) ? "):
+        CONFIRM = "Are you sure you want to do this (yes/no) ? "
+        ask = question or CONFIRM
+        val = input(ask).lower()
         if val.lower() in "yes":
             return True
         if val.lower() in "no":
@@ -80,6 +91,7 @@ class AddressBookApp(object):
         # Invalid input response.
         print('Invalid input, please try again.')
         return self.ask_question(question)
+
 
 myperson = Person()
 myclass = AddressBookApp()
