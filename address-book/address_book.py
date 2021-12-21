@@ -73,10 +73,11 @@ class AddressBookApp(object):
             new_email = input("Email: ")
             new_phone = input("Phone Number: ")
             new_address = input("Address: ").title()
-            self.address_book.pop(old_name)
-            self.address_book[new_name] = Person(new_name, new_email, new_phone, new_address)
-            self.save_details()
-            print("Contact successfully updated.")
+            if self.ask_question(None) == True:
+                self.address_book.pop(old_name)
+                self.address_book[new_name] = Person(new_name, new_email, new_phone, new_address)
+                self.save_details()
+                print("Contact successfully updated.")
             if self.ask_question() == False:
                 return
 
