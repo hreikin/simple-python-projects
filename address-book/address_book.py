@@ -43,6 +43,7 @@ class AddressBookApp(object):
         self.print_line(name="Name", email="Email", phone="Phone", address="Address")
         for info in self.address_book.values():
             self.print_line(**vars(info))
+        input("\nPress ENTER to return to the menu.")
 
     def add_contact(self):
         while True:
@@ -108,15 +109,37 @@ class AddressBookApp(object):
         print('Invalid input, please try again.')
         return self.ask_question(question)
 
+    def __str__(self):
+        return MENU
 
-myperson = Person()
-myclass = AddressBookApp()
+MENU = """
+Welcome to the address book app
 
-# Testing things work.
-myclass.view_all()
-myclass.add_contact()
-myclass.view_all()
-myclass.delete_contact()
-myclass.view_all()
-myclass.edit_contact()
-myclass.view_all()
+1. View contacts
+2. Add new contact
+3. Update contact
+4. Delete contact
+5. Exit
+""".title()
+
+def main():
+    app = AddressBookApp()
+    choice = ""
+    while choice != "5":
+        print(app)
+        choice = input("Make a selection: ")
+        if choice == "1":
+            app.view_all()
+        elif choice == "2":
+            app.add_contact()
+        elif choice == "3":
+            app.edit_contact()
+        elif choice == "4":
+            app.delete_contact()
+        elif choice == "5":
+            print("\nExiting now. Goodbye!")            
+        else:
+            print("\nInvalid input, please try again.")
+
+if __name__ == '__main__':
+    main()
