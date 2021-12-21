@@ -45,6 +45,13 @@ class AddressBookApp(object):
             self.print_line(**vars(info))
         input("\nPress ENTER to return to the menu.")
 
+    def get_details(self):
+        name = input("Name: ").title()
+        email = input("Email: ")
+        phone = input("Phone Number: ")
+        address = input("Address: ").title()
+        return name, email, phone, address
+
     def add_contact(self):
         while True:
             print("Ok, let's add a new contact. Please provide the following info.")
