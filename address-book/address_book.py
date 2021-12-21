@@ -61,6 +61,25 @@ class AddressBookApp(object):
             if self.ask_question() == False:
                 return
 
+    def edit_contact(self):
+        while True:
+            print("Ok, let's edit a contact. Please provide the contacts name.")
+            old_name = input("Name: ").title()
+            if old_name not in self.address_book:
+                    print("There is no contact by that name.")
+                    pass
+            print("Input the new information below.")
+            new_name = input("Name: ").title()
+            new_email = input("Email: ")
+            new_phone = input("Phone Number: ")
+            new_address = input("Address: ").title()
+            self.address_book.pop(old_name)
+            self.address_book[new_name] = Person(new_name, new_email, new_phone, new_address)
+            self.save_details()
+            print("Contact successfully updated.")
+            if self.ask_question() == False:
+                return
+
     def delete_contact(self):
         while True:
             name = input("What is the name of the contact you wish to delete: ").title()
@@ -97,4 +116,6 @@ myclass.view_all()
 myclass.add_contact()
 myclass.view_all()
 myclass.delete_contact()
+myclass.view_all()
+myclass.edit_contact()
 myclass.view_all()
