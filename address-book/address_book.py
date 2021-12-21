@@ -58,9 +58,7 @@ class AddressBookApp(object):
                 self.address_book[name] = Person(name, email, phone, address)
                 self.save_details()
                 print("Contact successfully added.")
-            if self.ask_question() == True:
-                pass
-            else:
+            if self.ask_question() == False:
                 return
 
     def delete_contact(self):
@@ -74,12 +72,10 @@ class AddressBookApp(object):
                 self.address_book.pop(name)
                 print(f"Ok, {name} is deleted.")
                 self.save_details()
-            if self.ask_question() == True:
-                pass
-            else:
+            if self.ask_question() == False:
                 return
 
-    def ask_question(self, question="Do you want to do this again (yes/no) ? "):
+    def ask_question(self, question="Do you want to do this action again (yes/no) ? "):
         CONFIRM = "Are you sure you want to do this (yes/no) ? "
         ask = question or CONFIRM
         val = input(ask).lower()
