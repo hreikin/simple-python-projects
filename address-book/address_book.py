@@ -47,14 +47,15 @@ class AddressBookApp(object):
     def add_contact(self):
         print("Ok, let's add a new contact. Please provide the following info.")
         name = input("Name: ").title()
+        if name in self.address_book:
+            print("A contact is already present with that name.")
+            return
         email = input("Email: ")
         phone = input("Phone Number: ")
         address = input("Address: ").title()
-        if name not in self.address_book:
-            self.address_book[name] = Person(name, email, phone, address)
-            self.save_details()
-        else:
-            print("Contact is already present.")
+        self.address_book[name] = Person(name, email, phone, address)
+        self.save_details()
+        print("Contact successfully added.")
 
     def delete_contact(self):
         name = input("What is the name of the contact you wish to delete: ").title()
