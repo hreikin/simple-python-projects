@@ -51,26 +51,26 @@ class AddressBookApp(object):
             if name in self.address_book:
                 print("A contact is already present with that name.")
                 pass
-                #if self.ask_question() == False:
-                    #return
             else:
                 email = input("Email: ")
                 phone = input("Phone Number: ")
                 address = input("Address: ").title()
                 return name, email, phone, address
-            if self.ask_question() == False:
-                return
+            # return self.retry_question()
+            # if self.ask_question() == False:
+            #     return
                 
     def add_contact(self):
         while True:
             print("Ok, let's add a new contact. Please provide the following info.")
             name, email, phone, address = self.get_details()
-            self.address_book[name] = Person(name, email, phone, address)
-            self.save_details()
-            print("Contact added successfully.")
+            if self.ask_question(None) == True:
+                self.address_book[name] = Person(name, email, phone, address)
+                self.save_details()
+                print("Contact added successfully.")
+            # return self.retry_question()
             if self.ask_question() == False:
                 return
-            
 
     def edit_contact(self):
         while True:
@@ -79,13 +79,14 @@ class AddressBookApp(object):
             if old_name not in self.address_book:
                     print("There is no contact by that name.")
                     pass
-            print("Input the new information below.")
-            name, email, phone, address = self.get_details()
-            if self.ask_question(None) == True:
-                self.address_book.pop(old_name)
-                self.address_book[name] = Person(name, email, phone, address)
-                self.save_details()
-                print("Contact successfully updated.")
+            else:
+                print("Input the new information below.")
+                name, email, phone, address = self.get_details()
+                if self.ask_question(None) == True:
+                    self.address_book.pop(old_name)
+                    self.address_book[name] = Person(name, email, phone, address)
+                    self.save_details()
+                    print("Contact successfully updated.")
             if self.ask_question() == False:
                 return
 
@@ -115,6 +116,10 @@ class AddressBookApp(object):
         # Invalid input response.
         print('Invalid input, please try again.')
         return self.ask_question(question)
+
+    def retry_question(self):
+        ask_to_retry = self.ask_question()
+        return ask_to_retry
 
     def __str__(self):
         return MENU
