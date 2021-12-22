@@ -56,9 +56,6 @@ class AddressBookApp(object):
                 phone = input("Phone Number: ")
                 address = input("Address: ").title()
                 return name, email, phone, address
-            # return self.retry_question()
-            # if self.ask_question() == False:
-            #     return
                 
     def add_contact(self):
         while True:
@@ -68,7 +65,7 @@ class AddressBookApp(object):
                 self.address_book[name] = Person(name, email, phone, address)
                 self.save_details()
                 print("Contact added successfully.")
-            # return self.retry_question()
+            # self.retry_question()
             if self.ask_question() == False:
                 return
 
@@ -87,6 +84,7 @@ class AddressBookApp(object):
                     self.address_book[name] = Person(name, email, phone, address)
                     self.save_details()
                     print("Contact successfully updated.")
+            # self.retry_question()
             if self.ask_question() == False:
                 return
 
@@ -101,6 +99,7 @@ class AddressBookApp(object):
                 self.address_book.pop(name)
                 print(f"Ok, {name} is deleted.")
                 self.save_details()
+            # self.retry_question()
             if self.ask_question() == False:
                 return
     
