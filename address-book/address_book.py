@@ -93,11 +93,11 @@ class AddressBookApp(object):
     def delete_contact(self):
         while True:
             name = input("What is the name of the contact you wish to delete: ").title()
+            confirm_delete = f"Are you sure you want to delete the info for {name.title()} (yes/no) ? "
             if name not in self.address_book:
                 print("There is no contact by that name.")
                 pass
-            # confirm_delete = f"Are you sure you want to delete the info for {name.title()} (yes/no) ? "
-            elif self.ask_question(None) == True:
+            elif self.ask_question(confirm_delete) == True:
                 self.address_book.pop(name)
                 print(f"Ok, {name} is deleted.")
                 self.save_details()
