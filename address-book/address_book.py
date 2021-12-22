@@ -103,6 +103,14 @@ class AddressBookApp(object):
                 self.save_details()
             if self.ask_question() == False:
                 return
+    
+    def search_contact(self):
+        search_name = input("What is the name of the contact you wish to search for: ").title()
+        search_item = self.address_book[search_name]
+        for key, value in vars(search_item).items():
+            print(key + ":", value)
+        input("\nPress ENTER to return to the menu.")
+
 
     def ask_question(self, question="Do you want to do this action again (yes/no) ? "):
         CONFIRM = "Are you sure you want to do this (yes/no) ? "
@@ -128,27 +136,30 @@ MENU = """
 Welcome to the address book app
 
 1. View contacts
-2. Add new contact
-3. Update contact
-4. Delete contact
-5. Exit
+2. Search for a contact
+3. Add new contact
+4. Update contact
+5. Delete contact
+6. Exit
 """.title()
 
 def main():
     app = AddressBookApp()
     choice = ""
-    while choice != "5":
+    while choice != "6":
         print(app)
         choice = input("Make a selection: ")
         if choice == "1":
             app.view_all()
         elif choice == "2":
-            app.add_contact()
+            app.search_contact()
         elif choice == "3":
-            app.edit_contact()
+            app.add_contact()
         elif choice == "4":
-            app.delete_contact()
+            app.edit_contact()
         elif choice == "5":
+            app.delete_contact()
+        elif choice == "6":
             print("\nExiting now. Goodbye!")            
         else:
             print("\nInvalid input, please try again.")
