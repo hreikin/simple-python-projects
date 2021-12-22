@@ -11,7 +11,6 @@
 # add, delete and modify the persons.
 from pathlib import Path
 import pickle
-import sys
 
 class Person(object):
     def __init__(self, name = "", email = "", phone = "", address = ""):
@@ -105,15 +104,17 @@ class AddressBookApp(object):
                 return
     
     def search_contact(self):
-        search_name = input("What is the name of the contact you wish to search for: ").title()
-        if search_name not in self.address_book:
-            print("There is no contact by that name.")
-        else:
-            search_item = self.address_book[search_name]
-            for key, value in vars(search_item).items():
-                print(key + ":", value)
-        input("\nPress ENTER to return to the menu.")
-
+        while True:
+            search_name = input("What is the name of the contact you wish to search for: ").title()
+            if search_name not in self.address_book:
+                print("There is no contact by that name.")
+                pass
+            else:
+                search_item = self.address_book[search_name]
+                for key, value in vars(search_item).items():
+                    print(key + ":", value)
+            if self.ask_question() == False:
+                return
 
     def ask_question(self, question="Do you want to do this action again (yes/no) ? "):
         CONFIRM = "Are you sure you want to do this (yes/no) ? "
@@ -125,7 +126,7 @@ class AddressBookApp(object):
             print("OK, cancelling.")
             return False
         # Invalid input response.
-        print('Invalid input, please try again.')
+        self.invalid_input()
         return self.ask_question(question)
 
     def retry_question(self):
@@ -156,19 +157,13 @@ class AddressBookApp(object):
             print(row)
 
     def main_loop(self, options):
-        ############################################## Application Start ##############################################
-        # Runs the program and shows the user a menu to select items from. When an item is selected it
-        # runs the corresponding function. If the input is invalid it asks the user to try again.
-
         running = True
-
         while running:
 
             print("\nWelcome to the address book app.")
             self.print_options(options)
 
             q = "Type in a number to make a selection: "
-            # current_selection = input(q)
             int_current_selection = self.ask_number(q)
 
             choices = tuple(options.values())
@@ -177,10 +172,9 @@ class AddressBookApp(object):
             try:
                 selection = choices[int_current_selection-1]
             except IndexError:
-                print('option does not exist...')
                 selection = {
-                    'title': "Exit mode selected",
-                    'func': self.close_statement,
+                    'title': "Option does not exist.",
+                    'func': self.invalid_input,
                 }
 
             print(selection['title'])
@@ -196,83 +190,18 @@ class AddressBookApp(object):
             val = input(q or default)
             int_val = int(val)
         except ValueError as e:
-            print("woops; that's not a number...")
+            self.invalid_input()
             return self.ask_number(q)
 
         return int_val
 
-
-    # def as_mode(self, q=None):
-
-    #     int_val = self.ask_number(q)
-
-    #     funcs = [
-    #         self.view_all,
-    #         self.search_contact,
-    #         self.add_contact,
-    #         self.edit_contact,
-    #         self.delete_contact,
-    #         self.close_statement,
-    #     ]
-
-    #     my_func = funcs[int_val - 1]
-    #     my_func()
-
-        # Takes the users input and runs the appropriate function. If the input is invalid it asks
-        # the user to try again.
-        # if int_val == "1":
-        #     self.view_all()
-        # elif int_val == "2":
-        #     self.search_contact()
-        # elif int_val == "3":
-        #     self.add_contact()
-        # elif int_val == "4":
-        #     self.edit_contact()
-        # elif int_val == "5":
-        #     self.delete_contact()
-        # elif int_val == "6":
-        #     sys.exit()
-        # else:
-        #     print("Not a valid choice, please try again.")
+    def invalid_input(self):
+        default = "Invalid input, please try again."
+        print(default)
 
     def close_statement(self):
         print("Ok, exiting program now.")
         return False
-
-#     def __str__(self):
-#         return MENU
-
-# MENU = """
-# Welcome to the address book app
-
-# 1. View contacts
-# 2. Search for a contact
-# 3. Add new contact
-# 4. Update contact
-# 5. Delete contact
-# 6. Exit
-# """.title()
-
-# def main():
-#     app = AddressBookApp()
-#     choice = ""
-#     while choice != "6":
-#         print(app)
-#         choice = input("Make a selection: ")
-#         if choice == "1":
-#             app.view_all()
-#         elif choice == "2":
-#             app.search_contact()
-#         elif choice == "3":
-#             app.add_contact()
-#         elif choice == "4":
-#             app.edit_contact()
-#         elif choice == "5":
-#             app.delete_contact()
-#         elif choice == "6":
-#             print("\nExiting now. Goodbye!")            
-#         else:
-#             print("\nInvalid input, please try again.")
 
 def main():
     app = AddressBookApp()
