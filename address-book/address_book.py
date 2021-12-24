@@ -21,7 +21,7 @@ class Person(object):
 
 class AddressBookApp(object):
     def __init__(self):
-        self.save_location = Path("address-book/address_book.data")
+        self.save_location = Path("./address_book.data", exist_ok=True)
         self.address_book = {}
         if self.save_location.exists():
             with open(self.save_location, "rb") as savefile:
