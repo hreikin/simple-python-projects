@@ -13,14 +13,30 @@ from pathlib import Path
 import pickle
 
 class Person(object):
+    """
+        Creates a 'Person' object to store the contact details in. This is then
+        stored within a dictionary to create an address book.
+    """
     def __init__(self, name = "", email = "", phone = "", address = ""):
+        """
+            Initializes all the variables required for the address books contact 
+            details.
+        """
         self.name = name
         self.email = email
         self.phone = phone
         self.address = address
 
 class AddressBookApp(object):
+    """
+        Holds all the functions required to run the address book.
+    """
     def __init__(self):
+        """
+            Initializes the save_location and address_book variables. If the 
+            save_location already exists then it loads the data from a file, 
+            otherwise it sets the address_variables default value.
+        """
         self.save_location = Path("./address_book.data", exist_ok=True)
         self.address_book = {}
         if self.save_location.exists():
