@@ -13,32 +13,56 @@ from pathlib import Path
 import pickle
 
 class Person(object):
+    """Creates a Person object to store the contact details in.
+
+       Creates a Person object to store the contact details in. This is then
+       stored within a dictionary to create an address book via nesting like so:
+
+                {
+                 Example Name : {
+                                  name:"Example Name",
+                                  email:"example@example.com",
+                                  phone:"12345678910",
+                                  address:"123 Example Street, Example Town"
+                                 },
+                 Another Name : {
+                                  name:"Another Name",
+                                  email:"another@example.com",
+                                  phone:"10987654321",
+                                  address:"123 Another Street, Another Town"
+                                 },
+                }
     """
-        Creates a 'Person' object to store the contact details in. This is then
-        stored within a dictionary to create an address book.
-    """
+
     def __init__(self, name = "", email = "", phone = "", address = ""):
+        """Initializes all the variables.
+
+        Initializes all the variables required for storing the address books
+        contact details. These are:
+
+        name
+        email
+        phone
+        address
         """
-            Initializes all the variables required for the address books contact 
-            details.
-        """
+
         self.name = name
         self.email = email
         self.phone = phone
         self.address = address
 
 class AddressBookApp(object):
-    """
-        Holds all the functions required to run the address book.
-    """
+    """Holds all the functions required to run the address book."""
+
     def __init__(self):
-        """
-            Initializes the save_location and address_book variables. If the 
-            save_location already exists then it loads the data from a file, 
-            otherwise it sets the address_variables default value.
+        """Initializes the save_location and loads the address_book variables.
+
+        Initializes the save_location and loads the address_book variables. If
+        the save_location already exists then it loads the data from a file,
+        otherwise it sets the address_book variable to an empty default
+        dictionary value.
         """
         self.save_location = Path("./address_book.data", exist_ok=True)
-        self.address_book = {}
         if self.save_location.exists():
             with open(self.save_location, "rb") as savefile:
                 self.address_book = pickle.load(savefile)
@@ -46,13 +70,26 @@ class AddressBookApp(object):
             self.address_book = {}
 
     def save_details(self):
+        """Uses the pickle module to save the address_book variable to file."""
         with open(self.save_location, "wb") as savefile:
             pickle.dump(self.address_book, savefile)
 
     def print_line(self, **info):
+        """Prints the headings of the view_all table.
+
+        Prints the headings of the view_all table with each one having a max
+        length of 25 characters.
+        """
         print(f"{info['name']:<25} {info['email']:<25} {info['phone']:<25} {info['address']:<25}")
 
     def view_all(self):
+        """Checks if the address_book contains any entries and displays them.
+
+        Checks if the address_book contains any entries and displays them. If
+        no entries are found it displays a message notifying the user. If any
+        entries are found it calls the print_line function and displays the
+        entries below the headings.
+        """
         if not self.address_book:
             print("No contacts found.")
             return
@@ -62,6 +99,16 @@ class AddressBookApp(object):
         input("\nPress ENTER to return to the menu.")
 
     def get_details(self):
+        """Asks the user to input the contacts details.
+
+        Asks the user to input the contacts details. This function is used by
+        the add_contact and edit_contact functions to collect the contact
+        information from the user.
+
+        The function checks to ensure another contact with the same name doesn't
+        already exist within the address_book before continuing to ask for the
+        remaining information.
+        """
         while True:
             name = input("Name: ").title()
             if name in self.address_book:
@@ -72,7 +119,7 @@ class AddressBookApp(object):
                 phone = input("Phone Number: ")
                 address = input("Address: ").title()
                 return name, email, phone, address
-                
+
     def add_contact(self):
         while True:
             print("Ok, let's add a new contact. Please provide the following info.")
