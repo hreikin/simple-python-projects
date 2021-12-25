@@ -15,8 +15,8 @@ import pickle
 class Person(object):
     """Creates a Person object to store the contact details in.
 
-       Creates a Person object to store the contact details in. This is then
-       stored within a dictionary to create an address book via nesting like so:
+    Creates a Person object to store the contact details in. This is then stored
+    within a dictionary to create an address book via nesting like so:
 
                 {
                  Example Name : {
@@ -37,8 +37,8 @@ class Person(object):
     def __init__(self, name = "", email = "", phone = "", address = ""):
         """Initializes all the variables.
 
-        Initializes all the variables required for storing the address books
-        contact details. These are:
+        Initializes all the variables with empty defaults that are required for
+        storing the persons contact details. These are:
 
         name
         email
@@ -99,7 +99,7 @@ class AddressBookApp(object):
         input("\nPress ENTER to return to the menu.")
 
     def get_details(self):
-        """Asks the user to input the contacts details.
+        """Asks the user to input the contact details and returns the variables.
 
         Asks the user to input the contacts details. This function is used by
         the add_contact and edit_contact functions to collect the contact
@@ -121,6 +121,20 @@ class AddressBookApp(object):
                 return name, email, phone, address
 
     def add_contact(self):
+    """Asks for the contact details and creates a Person object with the data.
+
+    Asks for the contact details and creates a Person object with the data.
+    This function calls the get_details function to gather the information
+    and then calls the ask_question function with the argument set to None
+    so it can confirm this action is what the user wants to complete.
+
+    It then adds the created Person object as an entry of the address_book
+    dictionary with the information supplied for the name as its key.
+
+    Once this is complete it finally calls the ask_question function using
+    the default argument to check if the user wants to add another contact or
+    return to the menu.
+    """
         while True:
             print("Ok, let's add a new contact. Please provide the following info.")
             name, email, phone, address = self.get_details()
