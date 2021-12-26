@@ -147,6 +147,21 @@ class AddressBookApp(object):
 				return
 
 	def edit_contact(self):
+		"""Asks for a name, checks it exists, then edits the existing details.
+		
+		Asks for a name, checks it exists, then edits the existing details. If 
+		the name doesnt exist it asks for another, if it does exist it calls the
+		get_details function to collect the new information. 
+		
+		Once this is complete it calls the ask_question function with the 
+		argument set to None to confirm the user wants to change the details. 
+		Once confirmed it uses .pop to remove the old details and inserts the 
+		new ones before it calls the save_details function to save them.
+		
+		Finally it calls the ask_question function with using the default 
+		argument to check if the user wants to do this action again or return to 
+		the menu.
+		"""
 		while True:
 			print("Ok, let's edit a contact. Please provide the contacts name.")
 			old_name = input("Name: ").title()
@@ -166,6 +181,21 @@ class AddressBookApp(object):
 				return
 
 	def delete_contact(self):
+		"""Asks for a name and removes the contact from the address book.
+		
+		Asks for a name and removes the contact from the address_book. If the 
+		name does not exist it prints a message to the user. If the name does 
+		exist it calls the ask_question function with the message specified in 
+		the confirm_delete variable to confirm the user wants to complete this 
+		action.
+		
+		Once confirmed it uses .pop to remove the item from the address_book and 
+		then calls the save_details function to save the new state of the 
+		address_book.
+		
+		Once this is complete it finally calls the ask_question function to see
+		if the user wants to do this action again or return to the menu.
+		"""
 		while True:
 			name = input("What is the name of the contact you wish to delete: ").title()
 			confirm_delete = f"Are you sure you want to delete the info for {name.title()} (yes/no) ? "
@@ -181,6 +211,13 @@ class AddressBookApp(object):
 				return
 
 	def search_contact(self):
+		"""Asks for a name and if it exists prints out the details.
+		
+		Asks for a name and if it exists prints out the details. If it doesn't 
+		exist a message is printed to the user. Once the details have been shown 
+		to the user it then calls the ask_question function with the default 
+		argument to check if the user wants to do this action again.
+		"""
 		while True:
 			search_name = input("What is the name of the contact you wish to search for: ").title()
 			if search_name not in self.address_book:
@@ -194,6 +231,15 @@ class AddressBookApp(object):
 				return
 
 	def ask_question(self, question="Do you want to do this action again (yes/no) ? "):
+		"""Either confirms or repeats the last action. Returns True or False.
+		
+		Either confirms or repeats the last action. Returns True or False. The 
+		default question asks if the user wants to do the last action again. The 
+		CONFIRM variable allows a second option for confirming if the user wants 
+		to continue. An argument can also be provided via a variable when the 
+		function is called to provide another question that requires a yes or no 
+		answer.
+		"""
 		CONFIRM = "Are you sure you want to do this (yes/no) ? "
 		ask = question or CONFIRM
 		val = input(ask).lower()
