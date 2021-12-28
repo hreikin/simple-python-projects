@@ -252,9 +252,9 @@ class AddressBookApp(object):
 		self.invalid_input()
 		return self.ask_question(question)
 
-	def retry_question(self):
-		ask_to_retry = self.ask_question()
-		return ask_to_retry
+	# def retry_question(self):
+		# ask_to_retry = self.ask_question()
+		# return ask_to_retry
 
 	def print_options(self, options):
 		"""Prints something like this for a dict of options:
@@ -280,6 +280,14 @@ class AddressBookApp(object):
 			print(row)
 
 	def main_loop(self, options):
+		"""Prints the menu to the screen and allows selection of functions.
+		
+		Prints the menu to the screen and allows selection of functions. This 
+		calls the print_options function with the options argument defined in 
+		the main function to display the menu to the user. Once a selection has 
+		been made the relevant function is run. If an invalid charcter is 
+		detected as input it prints a message to the user.
+		"""
 		running = True
 		while running:
 
@@ -308,6 +316,12 @@ class AddressBookApp(object):
 				running = True
 
 	def ask_number(self, q=None):
+		"""Takes user input for selection and raises an exception if invalid.
+		
+		Takes user input for selection and raises an exception if invalid. 
+		Converts the string input to an int value and raises an which then calls 
+		the invalid_input function if the string cannot be converted to an int.
+		"""
 		default = "Type in a number to make a selection: "
 		try:
 			val = input(q or default)
@@ -319,14 +333,21 @@ class AddressBookApp(object):
 		return int_val
 
 	def invalid_input(self):
+		"""Prints a message explaining the input is invalid."""
 		default = "Invalid input, please try again."
 		print(default)
 
 	def close_statement(self):
+		"""Prints a message before returning False to exit the program."""
 		print("Ok, exiting program now.")
 		return False
 
 def main():
+	"""Instantiates/runs the AddressBookApp and defines a menu via a dictionary.
+	
+	Instantiates/runs the AddressBookApp and defines a menu via a dictionary 
+	with the relevant functions.
+	"""
 	app = AddressBookApp()
 	options = {
 		'view': {
