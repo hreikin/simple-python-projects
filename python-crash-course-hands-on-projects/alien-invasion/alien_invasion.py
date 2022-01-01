@@ -20,6 +20,10 @@ def run_game():
         # Call check_events function to watch for keyboard and mouse events.
         gf.check_events(ship)
 
+        # Update the player ships position in response to input and ensures the 
+        # updated position is used when drawing to the screen.
+        ship.update()
+
         # Call update_screen function to update the images and flip to the new 
         # screen.
         gf.update_screen(ai_settings, screen, ship)
