@@ -2,14 +2,14 @@ import sys
 
 import pygame
 
-def run_game():
-    # Initialize the game and create a screen object.
-    pygame.init()
-    screen = pygame.display.set_mode((1200,800))
-    pygame.display.set_caption("Alien Invasion")
+from settings import Settings
 
-    # Set the background colour to grey.
-    bg_colour = (50, 50, 50)
+def run_game():
+    # Initialize pygame, settings and the screen object.
+    pygame.init()
+    ai_settings = Settings()
+    screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
+    pygame.display.set_caption("Alien Invasion")
 
     # Start the main loop for the game.
     while True:
@@ -20,7 +20,7 @@ def run_game():
                 sys.exit()
 
         # Redraw the screen during each pass through the loop.
-        screen.fill(bg_colour)
+        screen.fill(ai_settings.bg_colour)
 
         # Make the most recently drawn screen visible.
         pygame.display.flip()
