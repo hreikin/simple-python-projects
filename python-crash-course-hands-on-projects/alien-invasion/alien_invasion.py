@@ -18,7 +18,7 @@ def run_game():
     while True:
 
         # Call check_events function to watch for keyboard and mouse events.
-        gf.check_events()
+        gf.check_events(ship)
 
         # Call update_screen function to update the images and flip to the new 
         # screen.
