@@ -6,5 +6,5 @@ class Settings():
         # Screen related settings.
         self.screen_width = 1200
         self.screen_height = 800
-        # Set the background colour to grey.
+        # Set the background colour to an off white.
         self.bg_colour = (230, 230, 230)
