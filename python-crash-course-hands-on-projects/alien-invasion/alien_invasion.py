@@ -29,12 +29,7 @@ def run_game():
         ship.update()
 
         # Calls update() for each bullet in the group.
-        bullets.update()
-
-        # Get rid of bullets that have disappeared off the top of the screen.
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)
+        gf.update_bullets()
 
         # Call update_screen function to update the images and flip to the new 
         # screen.
