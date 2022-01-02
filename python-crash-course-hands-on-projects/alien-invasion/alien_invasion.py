@@ -29,7 +29,7 @@ def run_game():
         ship.update()
 
         # Calls update() for each bullet in the group.
-        gf.update_bullets()
+        gf.update_bullets(bullets)
 
         # Call update_screen function to update the images and flip to the new 
         # screen.
