@@ -1,4 +1,3 @@
-from typing import Sized
 import pygame
 from pygame.sprite import Sprite
 
