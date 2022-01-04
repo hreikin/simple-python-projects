@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Add new app. This object was created for us in "/catalog/apps.py".
+    'catalog.apps.CatalogConfig',
 ]
 
 MIDDLEWARE = [
