@@ -6,7 +6,7 @@ from .models import Author, Book, BookInstance, Genre, Language
 
 # Define the admin class.
 class AuthorAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
 
 # Register the admin class with the associated model.
 # admin.site.register(Author)
@@ -17,13 +17,13 @@ admin.site.register(Author, AuthorAdmin)
 # admin.site.register(Book)
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'author', 'display_genre')
 
 # Register the Admin classes for BookInstance using the decorator.
 # admin.site.register(BookInstance)
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('book', 'status', 'due_back')
 
 admin.site.register(Genre)
 admin.site.register(Language)
