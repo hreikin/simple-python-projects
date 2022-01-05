@@ -17,12 +17,14 @@ admin.site.register(Author, AuthorAdmin)
 # admin.site.register(Book)
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
+    list_filter = ('genre')
     list_display = ('title', 'author', 'display_genre')
 
 # Register the Admin classes for BookInstance using the decorator.
 # admin.site.register(BookInstance)
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
+    list_filter = ('status', 'due_back')
     list_display = ('book', 'status', 'due_back')
 
 admin.site.register(Genre)
