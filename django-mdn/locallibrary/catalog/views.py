@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views import generic
 
 # Create your views here.
 
@@ -17,11 +18,19 @@ def index(request):
     # The 'all()' is implied by default.
     num_authors = Author.objects.count()
 
+    # Amount of genres.
+    num_genres = Genre.objects.count()
+
+    # Number of books with Python in the title.
+    num_python = Book.objects.filter(title__contains='python').count()
+
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
+        'num_genres': num_genres,
+        'num_python': num_python
     }
 
     # Render the HTML template index.html with the data held in the context 
