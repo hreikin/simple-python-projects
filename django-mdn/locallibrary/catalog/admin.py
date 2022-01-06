@@ -4,6 +4,12 @@ from .models import Author, Book, BookInstance, Genre, Language
 
 # Register your models here.
 
+# Define inline Book class so it is linked/viewable on a authors's detail 
+# view page.
+class BookInline(admin.TabularInline):
+    model = Book
+    extra = 0
+
 # Define the admin class.
 class AuthorAdmin(admin.ModelAdmin):
     # Defines which fields are shown when viewing the list of authors in the 
@@ -22,8 +28,16 @@ class AuthorAdmin(admin.ModelAdmin):
         }),
     )
 
+    inlines = [BookInline]
+
 # Register the admin class with the associated model.
 admin.site.register(Author, AuthorAdmin)
+
+# Define inline BookInstance class so it is linked/viewable on a book's detail 
+# view page.
+class BookInstanceInline(admin.TabularInline):
+    model = BookInstance
+    extra = 0
 
 # Register the Admin classes for Book using the decorator, this does the same as 
 # the admin.site.register() syntax
@@ -37,11 +51,13 @@ class BookAdmin(admin.ModelAdmin):
         }),
     )
 
+    inlines = [BookInstanceInline]
+
 # Register the Admin classes for BookInstance using the decorator.
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
     list_filter = ('status', 'due_back')
-    list_display = ('book', 'status', 'due_back')
+    list_display = ('book', 'status', 'due_back', 'id')
     fieldsets = (
         ('Details', {
             'fields': ('id', 'book', 'imprint')
