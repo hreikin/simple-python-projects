@@ -13,7 +13,7 @@ from pathlib import Path
 import pickle
 
 class Person(object):
-    def __init__(self, name = "", email = "", phone = "", address = ""):
+    def __init__(self, name="", email="", phone="", address=""):
         self.name = name
         self.email = email
         self.phone = phone
@@ -24,14 +24,15 @@ class AddressBookApp(object):
         self.save_location = Path("./address_book.data", exist_ok=True)
         self.address_book = {}
         if self.save_location.exists():
-            with open(self.save_location, "rb") as savefile:
-                self.address_book = pickle.load(savefile)
-        else:
-            self.address_book = {}
+            address_text = Path(self.save_location).read_bytes()
+            self.address_book = pickle.loads(address_text)
+
+            # with open(self.save_location, "rb") as stream:
+            #     self.address_book = pickle.load(stream)
 
     def save_details(self):
-        with open(self.save_location, "wb") as savefile:
-            pickle.dump(self.address_book, savefile)
+        with open(self.save_location, "wb") as stream:
+            pickle.dump(self.address_book, stream)
 
     def print_line(self, **info):
         print(f"{info['name']:<25} {info['email']:<25} {info['phone']:<25} {info['address']:<25}")
@@ -58,25 +59,24 @@ class AddressBookApp(object):
                 return name, email, phone, address
                 
     def add_contact(self):
-        while True:
+        run = True
+        while run:
             print("Ok, let's add a new contact. Please provide the following info.")
             name, email, phone, address = self.get_details()
             if self.ask_question(None) == True:
                 self.address_book[name] = Person(name, email, phone, address)
                 self.save_details()
                 print("Contact added successfully.")
-            # self.retry_question()
-            if self.ask_question() == False:
-                return
+            run = self.retry_question()
+            # if self.ask_question() == False:
+            #     return
 
     def edit_contact(self):
         while True:
             print("Ok, let's edit a contact. Please provide the contacts name.")
             old_name = input("Name: ").title()
-            if old_name not in self.address_book:
-                    print("There is no contact by that name.")
-                    pass
-            else:
+            does_exist = old_name in self.address_book
+            if does_exist:
                 print("Input the new information below.")
                 name, email, phone, address = self.get_details()
                 if self.ask_question(None) == True:
@@ -84,6 +84,10 @@ class AddressBookApp(object):
                     self.address_book[name] = Person(name, email, phone, address)
                     self.save_details()
                     print("Contact successfully updated.")
+            else:
+                s = "There is no contact by that name."
+                print(s)
+
             # self.retry_question()
             if self.ask_question() == False:
                 return
