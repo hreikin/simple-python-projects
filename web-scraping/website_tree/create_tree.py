@@ -1,6 +1,7 @@
 from anytree import Node, RenderTree
 
 source_txt = "output/url-list.txt"
+output_txt = "output/tree-view.txt"
 domain = "https://princetonscientific.com/"
 
 
@@ -61,5 +62,6 @@ def list_to_anytree(list_of_lists):
 
 
 anytree = list_to_anytree(separated_list)
-for pre, fill, node in RenderTree(anytree):
-    print(f"{pre}{node.name}")
+with open(output_txt, "w") as stream:
+    for pre, fill, node in RenderTree(anytree):
+        stream.write(f"{pre}{node.name}" + "\n")
