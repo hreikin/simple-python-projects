@@ -65,3 +65,4 @@ anytree = list_to_anytree(separated_list)
 with open(output_txt, "w") as stream:
     for pre, fill, node in RenderTree(anytree):
         stream.write(f"{pre}{node.name}" + "\n")
+        print(f"{pre}{node.name}")
