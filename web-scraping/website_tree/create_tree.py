@@ -3,7 +3,6 @@ from anytree import Node, RenderTree
 source_txt = "urls.txt"
 domain = "https://princetonscientific.com/"
 
-url_list = []
 with open(source_txt, "r") as stream:
     extracted_line = stream.readline()
 
