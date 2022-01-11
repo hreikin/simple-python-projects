@@ -17,6 +17,6 @@ class GetUrlsSpider(SitemapSpider):
         file = "new-urls.txt"
         with open(file, "a") as stream:
             for v in urls.values():
-                stream.write(v + " ")
+                stream.write(v + "\n")
 
         yield urls
