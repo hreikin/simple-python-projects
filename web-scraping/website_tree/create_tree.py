@@ -1,24 +1,29 @@
 from anytree import Node, RenderTree
 
-source_txt = "urls.txt"
+source_txt = "output/url-list.txt"
 domain = "https://princetonscientific.com/"
 
-with open(source_txt, "r") as stream:
-    extracted_line = stream.readline()
 
-slug_line = extracted_line.replace(domain, "")
-slug_list = slug_line.split()
+with open(source_txt, "r") as stream:
+    for line in stream:
+        extracted_line = stream.read()
+
+url_list = extracted_line.split("\n")
+url_list.pop(-1)
 
 stripped_list = []
-for item in slug_list:
-    new_item = item.strip("/")
+for item in url_list:
+    new_item = str(item).replace(domain, "")
     stripped_list.append(new_item)
 
-split_list = []
+stripped_list.pop(-1)
+
+separated_list = []
 for item in stripped_list:
     wip_item = str(item).split("/")
     wip_item.insert(0, "home")
-    split_list.append(wip_item)
+    wip_item.pop(-1)
+    separated_list.append(wip_item)
 
 # if you have multiple nodes with the same name you can not use the dict version 
 # below; you need to iterate from the root node over the children:
@@ -55,6 +60,6 @@ def list_to_anytree(list_of_lists):
     return root_node
 
 
-anytree = list_to_anytree(split_list)
+anytree = list_to_anytree(separated_list)
 for pre, fill, node in RenderTree(anytree):
     print(f"{pre}{node.name}")
